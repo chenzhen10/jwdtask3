@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns="http://epamtr.com/Menu"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://epamtr.com/Menu Menu.xsd">
+
+
+    <cold_snack id="c1">
+        <photo>asdasdasd.ru</photo>
+        <name>Ассорти рыбное</name>
+        <description>Слабосоленная форель,семга</description>
+        <portion>100/20/15</portion>
+        <price>0.0</price>
+    </cold_snack>
+
+    <cold_snack id="c2">
+        <photo>asdfafafdaf.com</photo>
+        <name>Тарталетки с красной икрой</name>
+        <description>Тарталетки с красной икрой</description>
+        <portion>60/50</portion>
+        <price>0.0</price>
+    </cold_snack>
+
+    <hot_snack id="h1">
+        <photo>afafasdfasd.by</photo>
+        <name>Лобио с шампиньонами</name>
+        <description>Лобио с шампиньонами и грецкими орехами</description>
+        <portion>150/5</portion>
+        <price>105</price>
+    </hot_snack>
+
+
+    <breakfast id="b1">
+        <photo>afadfadf.org</photo>
+        <name>Глазунья</name>
+        <description>2 яйца</description>
+        <opt_descriptions>
+            <desc_of_the_addition>
+                <opt_description>1.ветчина</opt_description>
+                <price>1</price>
+            </desc_of_the_addition>
+            <desc_of_the_addition>
+                <opt_description>2.сыр</opt_description>
+                <price>0</price>
+            </desc_of_the_addition>
+            <desc_of_the_addition>
+                <opt_description>3.помидоры</opt_description>
+                <price>0</price>
+            </desc_of_the_addition>
+        </opt_descriptions>
+        <portion>150</portion>
+        <price>0.0</price>
+    </breakfast>
+
+
+</menu>
+
+
+
