@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>DomServlet</servlet-name>
-        <servlet-class>by.epam.kimbar.servlets.DomServlet</servlet-class>
+        <servlet-class>by.epam.kimbar.controller.DomServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>SAXServlet</servlet-name>
-        <servlet-class>by.epam.kimbar.servlets.SaxServlet</servlet-class>
+        <servlet-class>by.epam.kimbar.controller.SaxServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -27,13 +27,15 @@
 
     <servlet>
         <servlet-name>StAXServlet</servlet-name>
-        <servlet-class>by.epam.kimbar.servlets.StaxServlet</servlet-class>
+        <servlet-class>by.epam.kimbar.controller.StaxServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>StAXServlet</servlet-name>
         <url-pattern>/StAX</url-pattern>
     </servlet-mapping>
+    
+
 
 
 </web-app>

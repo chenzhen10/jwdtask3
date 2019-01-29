@@ -1,6 +1,6 @@
 package by.epam.kimbar;
 
-import by.epam.kimbar.utils.parsers.dom.DomParser;
+import by.epam.kimbar.dao.parsers.dom.DomParser;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;

@@ -25,7 +25,10 @@
     </tr>
   </table>
 
-  <%-- localisation , output of tables --%>
+
+
+
+  <%-- localisation ,pagable  --%>
 
 
 
