@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  errorPage="/error.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.local}"/>
@@ -11,7 +11,7 @@
 <h4><i><fmt:message bundle="${loc}" key="locale.headTranslate"/></i> by STAX</h4>
 
 
-<table border="3">
+<table border="3" cellspacing="5" cellpadding="5">
     <tr>
         <th><fmt:message bundle="${loc}" key="locale.headTableElement1"/></th>
         <th><fmt:message bundle="${loc}" key="locale.headTableElement2"/></th>
@@ -26,7 +26,7 @@
             <td>${menus.name}</td>
             <td>${menus.description}</td>
             <td>${menus.portion}</td>
-            <td>${menus.price}</td>
+            <td>${menus.optPrice}</td>
         </tr>
     </c:forEach>
 </table>
@@ -36,7 +36,6 @@
     <input type="hidden" name="local" value="ru_RU"/>
     <button>RU</button>
 </form>
-
 <form action="" method="post">
     <input type="hidden" name="local" value="en_US"/>
     <button>US</button>

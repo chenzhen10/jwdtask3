@@ -14,12 +14,13 @@ public class Menu implements Serializable {
     private List<String> optionalDescription;
     private String portion;
     private double price;
+    private String optPrice;
 
 
     public Menu() {
     }
 
-    public Menu(String id, String photoURL, String name, String description, List optionalDescription, String portion, double price) {
+    public Menu(String id, String photoURL, String name, String description, List<String> optionalDescription, String portion, double price, String optPrice) {
         this.id = id;
         this.photoURL = photoURL;
         this.name = name;
@@ -27,6 +28,7 @@ public class Menu implements Serializable {
         this.optionalDescription = optionalDescription;
         this.portion = portion;
         this.price = price;
+        this.optPrice = optPrice;
     }
 
     public String getId() {
@@ -85,6 +87,14 @@ public class Menu implements Serializable {
         this.price = price;
     }
 
+    public String getOptPrice() {
+        return optPrice;
+    }
+
+    public void setOptPrice(String optPrice) {
+        this.optPrice = optPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,15 +106,15 @@ public class Menu implements Serializable {
                 Objects.equals(name, menu.name) &&
                 Objects.equals(description, menu.description) &&
                 Objects.equals(optionalDescription, menu.optionalDescription) &&
-                Objects.equals(portion, menu.portion);
+                Objects.equals(portion, menu.portion) &&
+                Objects.equals(optPrice, menu.optPrice);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, photoURL, name, description, optionalDescription, portion, price);
+        return Objects.hash(id, photoURL, name, description, optionalDescription, portion, price, optPrice);
     }
-
 
     @Override
     public String toString() {
@@ -116,6 +126,7 @@ public class Menu implements Serializable {
                 ", optionalDescription=" + optionalDescription +
                 ", portion='" + portion + '\'' +
                 ", price=" + price +
+                ", optPrice=" + optPrice +
                 '}';
     }
 }

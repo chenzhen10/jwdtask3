@@ -14,8 +14,9 @@ public class MenuSaxHandler extends DefaultHandler {
     private List<Menu> menuList = new ArrayList<>();
     private Menu menu = new Menu();
     private StringBuilder text;
-    private ArrayList resOfOptionalDescription = null;
-    private ArrayList resultSet = null;
+    private List resOfOptionalDescription = null;
+    private List resultSet = null;
+    private List optPrice = null;
 
     public List<Menu> getMenuList(){
         return menuList;
@@ -39,6 +40,7 @@ public class MenuSaxHandler extends DefaultHandler {
             menu = new Menu();
             resultSet = new ArrayList();
             resOfOptionalDescription = new ArrayList<>();
+            optPrice = new ArrayList();
             menu.setId(attributes.getValue("id"));
         }
 
@@ -67,12 +69,13 @@ public class MenuSaxHandler extends DefaultHandler {
               menu.setPortion(text.toString());
               break;
           case PRICE:
-              menu.setPrice(Double.parseDouble(text.toString()));
+              optPrice.add(text.toString());
               break;
           case COLD_SNACK:
               if(resOfOptionalDescription.size() != 0 ) {
                   resultSet.add("на выбор ( " + resOfOptionalDescription + " )");
               }
+              menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
               menu.setDescription(String.valueOf(resultSet).replace("[","").replace("]",""));
               menuList.add(menu);
               break;
@@ -80,6 +83,7 @@ public class MenuSaxHandler extends DefaultHandler {
               if(resOfOptionalDescription.size() != 0 ) {
                   resultSet.add("на выбор ( " + resOfOptionalDescription + " )");
               }
+              menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
               menu.setDescription(String.valueOf(resultSet).replace("[","").replace("]",""));
               menuList.add(menu);
               break;
@@ -87,6 +91,7 @@ public class MenuSaxHandler extends DefaultHandler {
               if(resOfOptionalDescription.size() != 0 ) {
                   resultSet.add("на выбор ( " + resOfOptionalDescription + " )");
               }
+              menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
               menu.setDescription(String.valueOf(resultSet).replace("[","").replace("]",""));
               menuList.add(menu);
               break;

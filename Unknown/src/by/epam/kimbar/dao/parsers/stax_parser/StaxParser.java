@@ -3,6 +3,7 @@ package by.epam.kimbar.dao.parsers.stax_parser;
 
 import by.epam.kimbar.model.entity.Menu;
 import by.epam.kimbar.model.MenuTagName;
+import org.apache.log4j.Logger;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -16,22 +17,19 @@ import java.util.List;
 
 public class StaxParser {
     private static XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-    private static ArrayList resultSet = null;
+    private static List resultSet = null;
+    private static List optPrice = null;
 
 
 
-    public static List<Menu> parseByStaxParser() {
-        List<Menu> menus = null;
-        try {
-            InputStream inputStream = new FileInputStream("C:\\Users\\Tim\\Desktop\\Unknown\\resources\\Menu.xml");
-            XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
+    public static List<Menu> parseByStaxParser() throws XMLStreamException, FileNotFoundException {
 
-            menus = process(reader);
+        InputStream inputStream = new FileInputStream("C:\\Users\\Tim\\Desktop\\Unknown\\src\\by\\epam\\kimbar\\view\\Menu.xml");
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
+
+        List<Menu> menus = process(reader);
 
 
-        } catch (XMLStreamException | FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
         return menus;
     }
 
@@ -56,18 +54,21 @@ public class StaxParser {
                             menu.setId(reader.getAttributeValue(null, "id"));
                             resultSet = new ArrayList();
                             optional_desc = new ArrayList();
+                            optPrice = new ArrayList();
                             break;
                         case BREAKFAST:
                             menu = new Menu();
                             menu.setId(reader.getAttributeValue(null, "id"));
                             resultSet = new ArrayList();
                             optional_desc = new ArrayList();
+                            optPrice = new ArrayList();
                             break;
                         case HOT_SNACK:
                             menu = new Menu();
                             menu.setId(reader.getAttributeValue(null, "id"));
                             resultSet = new ArrayList();
                             optional_desc = new ArrayList();
+                            optPrice = new ArrayList();
                             break;
                     }
                     break;
@@ -97,7 +98,7 @@ public class StaxParser {
                             menu.setPortion(text);
                             break;
                         case PRICE:
-                            menu.setPrice(Double.parseDouble(text));
+                            optPrice.add(text);
                             break;
                     }
                     break;
@@ -107,23 +108,26 @@ public class StaxParser {
 
                     switch (menuTagName) {
                         case COLD_SNACK:
-                            if(optional_desc.size() != 0 ) {
+                            if (optional_desc.size() != 0) {
                                 resultSet.add("на выбор ( " + optional_desc + " )");
                             }
+                            menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
                             menu.setDescription(String.valueOf(resultSet).replace("[", "").replace("]", ""));
                             menus.add(menu);
                             break;
                         case HOT_SNACK:
-                            if(optional_desc.size() != 0 ) {
+                            if (optional_desc.size() != 0) {
                                 resultSet.add("на выбор ( " + optional_desc + " )");
                             }
+                            menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
                             menu.setDescription(String.valueOf(resultSet).replace("[", "").replace("]", ""));
                             menus.add(menu);
                             break;
                         case BREAKFAST:
-                            if(optional_desc.size() != 0 ) {
+                            if (optional_desc.size() != 0) {
                                 resultSet.add("на выбор ( " + optional_desc + " )");
                             }
+                            menu.setOptPrice(String.valueOf(optPrice).replace("[","").replace("]",""));
                             menu.setDescription(String.valueOf(resultSet).replace("[", "").replace("]", ""));
                             menus.add(menu);
                             break;

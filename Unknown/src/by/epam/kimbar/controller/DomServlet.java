@@ -2,6 +2,8 @@ package by.epam.kimbar.controller;
 
 import by.epam.kimbar.model.entity.Menu;
 import by.epam.kimbar.dao.parsers.dom.DomParser;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import javax.servlet.RequestDispatcher;
@@ -15,8 +17,26 @@ import java.util.List;
 
 @WebServlet(name = "DomServlet")
 public class DomServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private Logger log  = null;
 
+
+    @Override
+    public void init() throws ServletException {
+        log = Logger.getRootLogger();
+        BasicConfigurator.configure();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession(true).setAttribute("local", request.getParameter("local"));
+        List<Menu> menu;
+        try {
+            menu = DomParser.parseByDomParser();
+
+            request.setAttribute("menu", menu);
+        } catch (SAXException e) {
+            log.info(e);
+        }
+        request.getRequestDispatcher("jsp/dom.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +48,7 @@ public class DomServlet extends HttpServlet {
 
             request.setAttribute("menu", menu);
         } catch (SAXException e) {
-            e.printStackTrace();
+            log.info(e);
         }
         rq.forward(request, response);
 

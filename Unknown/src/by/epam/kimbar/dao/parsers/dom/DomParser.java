@@ -22,7 +22,7 @@ public class DomParser {
 
 
     public static List<Menu> parseByDomParser() throws IOException, SAXException {
-        domParser.parse("C:\\Users\\Tim\\Desktop\\Unknown\\resources\\Menu.xml");
+        domParser.parse("C:\\Users\\Tim\\Desktop\\Unknown\\src\\by\\epam\\kimbar\\view\\Menu.xml");
         Document document = domParser.getDocument();
 
         Element root = document.getDocumentElement();
@@ -49,7 +49,7 @@ public class DomParser {
         return child;
     }
 
-    private static List getNestedChild(Element element, String childName) {
+    private static List getNestedDescription(Element element, String childName) {
         NodeList nodes = element.getElementsByTagName(childName);
         ArrayList res = new ArrayList();
         ArrayList desc_e = new ArrayList();
@@ -58,36 +58,61 @@ public class DomParser {
             Element elem2 = (Element) elem;
 
             NodeList desc = elem2.getElementsByTagName("opt_description");
-            NodeList price = elem2.getElementsByTagName("price");
             desc_e.add(((Element) desc.item(0)).getTextContent().trim());
-            Element price_e = (Element) price.item(0);
+
         }
-        if(!desc_e.isEmpty()) {
+        if (!desc_e.isEmpty()) {
             res.add("на выбор ( " + desc_e + " )");
         }
         return res;
     }
 
+    private static List getInnerPrice(Element element, String childName) {
+        ArrayList innerPrices = new ArrayList();
+        NodeList nodes = element.getElementsByTagName(childName);
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node elem = nodes.item(i);
+            Element elem2 = (Element) elem;
+            NodeList price = elem2.getElementsByTagName("price");
+            Element price_e = (Element) price.item(0);
+            ++counter;
+            if(price_e != null) {
+                innerPrices.add(counter + ")" + price_e.getTextContent().trim());
+            }
+        }
+        return innerPrices;
+    }
+
 
     private static List parseByTagName(NodeList nameOfTheElement) {
         menuList = new ArrayList<>();
-        ArrayList resultSet = new ArrayList();
+
         for (int i = 0; i < nameOfTheElement.getLength(); i++) {
             menu = new Menu();
+            ArrayList resultSet = new ArrayList();
             Element element = (Element) nameOfTheElement.item(i);
 
             menu.setId(element.getAttribute("id"));
             menu.setPhotoURL(getSingleChild(element, "photo").getTextContent().trim());
             menu.setName(getSingleChild(element, "name").getTextContent().trim());
             //Merge description & optional description
-            resultSet.add(getSingleChild(element, "description").getTextContent().trim());
-            if(getNestedChild(element, "desc_of_the_addition").size() != 0) {
-                resultSet.add(getNestedChild(element, "desc_of_the_addition"));
+            if ((getSingleChild(element, "description") != null)) {
+                resultSet.add(getSingleChild(element, "description").getTextContent().trim());
             }
-            menu.setDescription(String.valueOf(resultSet).replace("[","").replace("]",""));
+            if (getNestedDescription(element, "desc_of_the_addition").size() != 0) {
+                resultSet.add(getNestedDescription(element, "desc_of_the_addition"));
+            }
+            menu.setDescription(String.valueOf(resultSet).replace("[", "").replace("]", ""));
 
             menu.setPortion(getSingleChild(element, "portion").getTextContent().trim());
-            menu.setPrice(Double.parseDouble(getSingleChild(element, "price").getTextContent().trim()));
+            menu.setOptPrice(String.valueOf(getInnerPrice(element, "desc_of_the_addition"))
+                    .replace("[", "").replace("]", ""));
+
+            if (getSingleChild(element, "price") != null && menu.getOptPrice().isEmpty()) {
+                menu.setOptPrice(getSingleChild(element, "price").getTextContent().trim());
+            }
+
             menuList.add(menu);
         }
 

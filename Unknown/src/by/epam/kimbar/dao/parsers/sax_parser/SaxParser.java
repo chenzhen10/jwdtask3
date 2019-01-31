@@ -16,7 +16,7 @@ public class SaxParser {
         MenuSaxHandler menuSaxHandler = new MenuSaxHandler();
 
         reader.setContentHandler(menuSaxHandler);
-        reader.parse("C:\\Users\\Tim\\Desktop\\Unknown\\resources\\Menu.xml");
+        reader.parse("C:\\Users\\Tim\\Desktop\\Unknown\\src\\by\\epam\\kimbar\\view\\Menu.xml");
 
         List<Menu> results = menuSaxHandler.getMenuList();
 
